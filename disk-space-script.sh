@@ -20,6 +20,7 @@ download_latest_snapshot() {
 
 # Function to download a specific snapshot
 download_specific_snapshot() {
+    echo "Visit https://snapshots.nysa.network/Oraichain/#Oraichain/"
     echo "Please enter the snapshot number:"
     read snapshot_number
     # Replace "xxxx" in the URL with the provided snapshot number
