@@ -2,7 +2,7 @@
 
 # Copy priv_validator_state.json to the .oraid directory:
 # Define file paths
-echo "Copy the priv_validato_state.json to the .oraid directory..."
+echo "Copy the priv_validator_state.json to the .oraid directory..."
 JSON_FILE="$HOME/.oraid/data/priv_validator_state.json"
 ORAID_DIR="$HOME/.oraid/"
 
@@ -14,7 +14,7 @@ echo "File moved successfully to .oraid."
 
 # Download the Snapshot
 echo "Downloading the Snapshot..."
-#curl -L https://snap.blockval.io/oraichain/oraichain_latest.tar.lz4 -o $HOME/oraichain_latest.tar.lz4
+curl -L https://snap.blockval.io/oraichain/oraichain_latest.tar.lz4 -o $HOME/oraichain_latest.tar.lz4
 
 # Wait until the folders are downloaded
 while [ ! -f $HOME/oraichain_latest.tar.lz4 ]; do
