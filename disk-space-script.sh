@@ -11,15 +11,52 @@ cp "$JSON_FILE" "$ORAID_DIR"
 
 echo "File moved successfully to .oraid."
 
+# Function to download the latest snapshot
+download_latest_snapshot() {
+    echo "Downloading the latest snapshot..."
+    # Download the latest snapshot from BlockVal
+    curl -L https://snap.blockval.io/oraichain/oraichain_latest.tar.lz4 -o "$HOME/oraichain_latest.tar.lz4"
+}
 
-# Download the Snapshot
-echo "Downloading the Snapshot..."
-curl -L https://snap.blockval.io/oraichain/oraichain_latest.tar.lz4 -o $HOME/oraichain_latest.tar.lz4
+# Function to download a specific snapshot
+download_specific_snapshot() {
+    echo "Please enter the snapshot number:"
+    read snapshot_number
+    # Replace "xxxx" in the URL with the provided snapshot number
+    url="https://snapshots.nysa.network/Oraichain/Oraichain_${snapshot_number}.tar.lz4"
+    curl -L "$url" -o "$HOME/Oraichain_${snapshot_number}.tar.lz4"
+}
 
-# Wait until the folders are downloaded
-while [ ! -f $HOME/oraichain_latest.tar.lz4 ]; do
-	sleep 1
+# Ask user for download option with timeout
+echo "Choose download option:"
+echo "1. Download the BLOCKVAL latest snapshot"
+echo "2. Download a NYSA-NETWORK snapshot - Please provide the latest snapshot number"
+echo "Waiting for input... (Timeout in 2 minutes)"
+
+if read -t 60 option; then
+    # Perform the selected action
+    case $option in
+        1)
+            download_latest_snapshot
+            ;;
+        2)
+            download_specific_snapshot
+            ;;
+        *)
+            echo "Invalid option. Downloading the latest snapshot by default."
+            download_latest_snapshot
+            ;;
+    esac
+else
+    echo "No input received. Downloading the latest snapshot automatically."
+    download_latest_snapshot
+fi
+
+# Wait until the snapshot is downloaded
+while [ ! -f "$HOME/oraichain_latest.tar.lz4" ] && [ ! -f "$HOME/Oraichain_${snapshot_number}.tar.lz4" ]; do
+    sleep 1
 done
+
 echo "Snapshot downloaded successfully."
 
 # Stop the service
