@@ -39,7 +39,7 @@ Installation Instructions:
    Then, add the following lines to schedule disk space checks every 6 hours:
    ```
    # Check disk space every 6 hours
-   0 */6 * * * /$HOME/check_disk_script.sh
+   0 */6 * * * /$HOME/diskchecker_HOME-oraid/check_disk_script.sh
    ```
 
 I've thoroughly tested the script and it operates flawlessly. However, I welcome your feedback and suggestions for further enhancements. Feel free to reach out with any concerns or improvement ideas. Thanks!
