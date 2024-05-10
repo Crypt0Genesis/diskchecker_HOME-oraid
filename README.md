@@ -147,6 +147,13 @@ Script Developed By Crypto-Genesis.... Happy Validating :)
 ```
 
 
+```
+If your server disk is running full and you need to run the script immediately, you can execute it directly using the following command:
+
+./disk-space-script.sh
+```
+
+
 **Additional Information:**
 
 We've implemented options for downloading snapshots, allowing users to select the desired image. A special acknowledgment to NysaNetwork and Blockval for extending their snapshot services to the Orai community.
