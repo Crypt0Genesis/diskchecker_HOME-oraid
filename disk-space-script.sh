@@ -13,7 +13,7 @@ echo "File moved successfully to .oraid."
 
 # Function to download the latest snapshot
 download_latest_snapshot() {
-    echo "Downloading the latest snapshot..."
+    echo "Downloading the latest Snapshot..."
     # Download the latest snapshot from BlockVal
     curl -L https://snap.blockval.io/oraichain/oraichain_latest.tar.lz4 -o "$HOME/oraichain_latest.tar.lz4"
 }
@@ -21,7 +21,7 @@ download_latest_snapshot() {
 # Function to download a specific snapshot
 download_specific_snapshot() {
     echo "Visit https://snapshots.nysa.network/Oraichain/#Oraichain/"
-    echo "Please enter the snapshot number:"
+    echo "Please enter the latest snapshot number:"
     read snapshot_number
     # Replace "xxxx" in the URL with the provided snapshot number
     url="https://snapshots.nysa.network/Oraichain/Oraichain_${snapshot_number}.tar.lz4"
@@ -31,8 +31,9 @@ download_specific_snapshot() {
 # Ask user for download option with timeout
 echo "Choose download option:"
 echo "1. Download the BLOCKVAL latest snapshot"
-echo "2. Download a NYSA-NETWORK snapshot - Please provide the latest snapshot number"
-echo "Waiting for input... (Timeout in 2 minutes)"
+echo "2. Download a NYSA-NETWORK snapshot - Recommended"
+echo "Please enter the option 1 or 2"
+echo "Waiting for input... (Timeout in 1 minute)"
 
 if read -t 60 option; then
     # Perform the selected action
@@ -61,7 +62,7 @@ done
 echo "Snapshot downloaded successfully."
 
 # Stop the service
-echo "Stopping the service..."
+echo "Stopping the Oraid service..."
 sudo systemctl stop oraid
 
 # Remove the folders
@@ -101,11 +102,14 @@ cp "$OLD_FILE" "$NEW_DIR"
 echo "File moved successfully to $NEW_DIR."
 
 # Start the service
-echo "Starting the service..."
+echo "Starting the Oriad service..."
 sudo systemctl start oraid
 
 # Delete remaining tar.lz4 files
 echo "Deleting remaining tar.lz4 files..."
 rm -f $HOME/*.tar.lz4
 
-echo "Script execution completed”
+echo "Script execution completed...."
+
+echo "Script developed By Crypto-Genesis.... Happy Validating :)"
+
