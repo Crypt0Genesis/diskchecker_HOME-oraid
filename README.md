@@ -4,7 +4,30 @@ The primary goal in developing this script is to prevent server downtime due to 
 
 This script operates on the principle of Zero Touch Provisioning (ZTP), automating the monitoring and management of disk space. It conducts checks every 6 hours, triggering execution when disk usage surpasses 80%.
 
-Here's a breakdown of the script's functionality:
+**System Requirements**
+
+1) Operating System: Ubuntu
+
+2) Sudo Permissions with No Password Prompt:
+To disable the password prompt for sudo privileges, follow these steps:
+
+Open the sudoers file using the command: 
+```
+sudo visudo
+
+Add or replace the following line to the file:
+
+#Allow members of group sudo to execute any command#
+
+%sudo   ALL=(ALL:ALL) NOPASSWD:ALL
+
+Save and exit the file. "Ctrl + x -> Y and Enter"
+```
+3) Systemd Service Setup and Enablement:
+Ensure that the systemd service is set up and enabled for proper functionality.
+
+
+**Here's a breakdown of the script's functionality:**
 
 1. **Backup:** Copies the existing `priv_validator_state.json` from the `data` folder and moves it to `.oraid`.
 2. **Snapshot Update:** Downloads the latest snapshot.
