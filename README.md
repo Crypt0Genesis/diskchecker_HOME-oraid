@@ -1,4 +1,4 @@
-# Orai Disk Checker
+# Orai Server Disk Checker
 
 The primary goal in developing this script is to prevent server downtime due to disk space reaching capacity, especially with the increased volume of blockchain data comparisons against historical data.
 
@@ -42,7 +42,8 @@ Installation Instructions:
 
 1. **Download the Files:** Retrieve the necessary files onto your server.
    ```
-   sudo git clone https://github.com/Crypt0Genesis/diskcecker_HOME-oraid.git
+   cd $HOME
+   sudo git clone https://github.com/Crypt0Genesis/diskchecker_HOME-oraid.git
    ```
 
 3. **Permissions:** Set executable permissions for the `disk-space-script.sh` file using:
@@ -65,4 +66,110 @@ Installation Instructions:
    0 */6 * * * /$HOME/diskchecker_HOME-oraid/check_disk_script.sh
    ```
 
-I've thoroughly tested the script and it operates flawlessly. However, I welcome your feedback and suggestions for further enhancements. Feel free to reach out with any concerns or improvement ideas. Thanks!
+**Setup Example**
+
+```
+cryptogenesis@Orai-Node:~$ cd $HOME
+cryptogenesis@Orai-Node:~$ sudo git clone https://github.com/Crypt0Genesis/diskchecker_HOME-oraid.git
+Cloning into 'diskchecker_orai-orai-oraid'...
+remote: Enumerating objects: 86, done.
+remote: Counting objects: 100% (86/86), done.
+remote: Compressing objects: 100% (85/85), done.
+remote: Total 86 (delta 49), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (86/86), 41.19 KiB | 3.17 MiB/s, done.
+Resolving deltas: 100% (49/49), done.
+
+cryptogenesis@Orai-Node:~$ ls
+diskchecker_HOME-oraid  go  orai 
+
+cryptogenesis@Orai-Node:~$ cd diskchecker_HOME-oraid
+
+cryptogenesis@Orai-Node:~/diskchecker_HOME-oraid$ ls
+LICENSE  README.md  check_disk_script.sh  disk-space-script.sh
+
+cryptogenesis@Orai-Node:~/diskchecker_HOME-oraid$ sudo chmod +x check_disk_script.sh
+
+cryptogenesis@Orai-Node:~/diskchecker_HOME-oraid$ sudo chmod +x disk-space-script.sh
+
+cryptogenesis@Orai-Node:~/diskchecker_HOME-oraid$ crontab -e
+no crontab for orainode - using an empty one
+
+Select an editor.  To change later, run 'select-editor'.
+  1. /bin/nano        <---- easiest
+  2. /usr/bin/vim.basic
+
+Choose 1-2 [1]: 1
+
+#m h  dom mon dow   command
+   # Check disk space every 6 hours
+   0 */6 * * * /$HOME/diskchecker_HOME-oraid/check_disk_script.sh
+
+Now Run the Script Manually:
+orainode@Orai-Node:~/diskchecker_HOME-oraid$ ./check_disk_script.sh
+Disk space is below 80%. No action required.
+```
+
+**If Disk Space reach at 80% or Above**
+```
+cryptogenesis@Orai-Node:~/diskchecker_HOME-oraid$ ./check_disk_script.sh
+Disk space is at 80%. Running script...
+Copy the priv_validator_state.json to the .oraid directory...
+File moved successfully to .oraid.
+
+Snapshot Download
+Choose download option:
+1. Download the BLOCKVAL latest snapshot
+2. Download a NYSA-NETWORK snapshot 
+Please enter the option 1 or 2
+Waiting for input... (Timeout in 1 minute)
+2
+(Visit https://snapshots.nysa.network/Oraichain/#Oraichain/)
+Please enter the latest snapshot number:
+20431522
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 9073M  100 9073M    0     0  25.2M      0  0:05:58  0:05:58 --:--:-- 39.3M
+Snapshot downloaded successfully.
+
+Stopping the oraid service...
+Removing old Data and Wasm folders...
+Removed old Data and Wasm folders...
+Unzipping the new Snapshot Folders...
+New Snapshot Folders unzipped successfully.
+Removing the new priv_validator_state.json and add the old one...
+Existing priv_validator_state.json file removed from data directory.
+File moved successfully to /home/cryptogenesis/.oraid/data/.
+Starting the oraid service...
+Deleting remaining tar.lz4 files...
+Script execution completed....
+Script Developed By Crypto-Genesis.... Happy Validating :)
+```
+
+
+**Additional Information:**
+
+We've implemented options for downloading snapshots, allowing users to select the desired image. A special acknowledgment to NysaNetwork and Blockval for extending their snapshot services to the Orai community.
+
+Efforts are underway to swiftly deploy our own Orai validator dashboard, Sentry node, RPC, and snapshots. Once available, we'll promptly share them with our Orai community. In the interim, we'll utilize the snapshots provided by NysaNetworks and Blockval.
+
+1. BlockVal Usage:
+   By default, Blockval's snapshot feature selects the latest available snapshot. However, please note that sometimes the snapshot size can range from 40-50GB.
+   The script will automatically opt for Blockval's image, as the link directs to the latest snapshot. 
+
+2. NysaNetwork Usage (Recommended):
+   The snapshot size from NysaNetwork is approximately 9GB. However, the image name varies each time.
+ 
+
+If you opt to use the script manually, you'll have the choice to select your preferred snapshot image. Upon manual execution, the script will present you with Option 1 and Option 2. If no option is selected, the script will wait for 1 minute before proceeding to download the default snapshot from BlockVal.
+
+If you run the script manually and choose Option 2 to download the Nysa snapshot, the script will prompt you to enter the latest image reference. You can obtain this reference from the Nysa Network website.
+
+
+**NOTE**
+```
+We've thoroughly tested the script and it operates flawlessly. However, I welcome your feedback and suggestions for further enhancements. Feel free to reach out with any concerns or improvement ideas. Thanks!
+
+Crypto-Genesis Validator:
+https://t.me/crypt0genesis
+https://scan.orai.io/validators/oraivaloper1r8zzyp7ffnuzlqv5hp75yhqrxf4g9fad532p7h
